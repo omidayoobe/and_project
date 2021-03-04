@@ -42,3 +42,13 @@ resource "aws_route_table" "route_table" {
     Name = "route_tb_and_project"
   }
 }
+
+resource "aws_route_table_association" "associate_route_table_1" {
+  subnet_id = aws_subnet.public-subnet-1.id
+  route_table_id = aws_route_table.route_table.id
+}
+
+resource "aws_route_table_association" "associate_route_table_2" {
+  subnet_id = aws_subnet.public-subnet-2.id
+  route_table_id = aws_route_table.route_table.id
+}
