@@ -92,3 +92,10 @@ resource "aws_security_group" "app_security_group" {
     Name = "public security group"
   }
 }
+
+resource "aws_internet_gateway" "internet_access" {
+  vpc_id = aws_vpc.and_vpc.id
+  tags = {
+    Name = "and_project_internet_gateway"
+  }
+}
