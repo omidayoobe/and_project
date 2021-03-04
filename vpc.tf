@@ -25,77 +25,20 @@ resource "aws_subnet" "public-subnet-2" {
   }
 }
 
-resource "aws_security_group" "app_security_group" {
-  name = "public_security_group"
-  description = "security group for app instances"
-  vpc_id = aws_vpc.and_vpc.id
-  timeouts {
-    create = "5m"
-  }
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port   = 1024
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.13.0/24"]
-  }
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port   = 27017
-    to_port     = 27017
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.13.0/24"]
-  }
-  egress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port   = 1024
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    Name = "public security group"
-  }
-}
-
 resource "aws_internet_gateway" "internet_access" {
   vpc_id = aws_vpc.and_vpc.id
   tags = {
     Name = "and_project_internet_gateway"
+  }
+}
+
+resource "aws_route_table" "route_table" {
+  vpc_id = aws_vpc.and_vpc
+  route {
+    cidr_block = "0.0.0.0/0" #any traffic should go through gate way
+    gateway_id = aws_internet_gateway.internet_access.id
+  }
+  tags = {
+    Name = "route_tb_and_project"
   }
 }
