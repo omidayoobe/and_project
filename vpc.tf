@@ -52,3 +52,30 @@ resource "aws_route_table_association" "associate_route_table_2" {
   subnet_id = aws_subnet.public-subnet-2.id
   route_table_id = aws_route_table.route_table.id
 }
+
+resource "aws_network_acl" "acl_public_sub" {
+  vpc_id = aws_vpc.and_vpc.id
+  subnet_ids = [aws_subnet.public-subnet-1.id,aws_subnet.public-subnet-2.id]
+
+  ingress {
+    protocol   = "-1"
+    rule_no    = 101
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+
+  egress {
+    protocol   = "-1"
+    rule_no    = 102
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 0
+  }
+
+  tags = {
+    Name = "acl_public_sub"
+  }
+}
