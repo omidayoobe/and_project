@@ -9,3 +9,7 @@ variable "access_key" {
 variable "secret_key" {
   default = "secret_key"
 }
+
+variable "ami" {
+  default = "ami-096f43ef67d75e998"
+}
