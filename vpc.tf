@@ -33,7 +33,7 @@ resource "aws_internet_gateway" "internet_access" {
 }
 
 resource "aws_route_table" "route_table" {
-  vpc_id = aws_vpc.and_vpc
+  vpc_id = aws_vpc.and_vpc.id
   route {
     cidr_block = "0.0.0.0/0" #any traffic should go through gate way
     gateway_id = aws_internet_gateway.internet_access.id
