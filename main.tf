@@ -10,7 +10,7 @@ resource "aws_instance" "instance_1" {
   key_name = "and_key_pair"
   associate_public_ip_address = true
   subnet_id = aws_subnet.public-subnet-1.id
-  vpc_security_group_ids = ["${aws_security_group.app_security_group.id}"]
+  vpc_security_group_ids = [aws_security_group.app_security_group.id]
   tags = {
     Name = "instance_1"
   }
@@ -22,7 +22,7 @@ resource "aws_instance" "instance_2" {
   key_name = "and_key_pair"
   associate_public_ip_address = true
   subnet_id = aws_subnet.public-subnet-2.id
-  vpc_security_group_ids = ["${aws_security_group.app_security_group.id}"]
+  vpc_security_group_ids = [aws_security_group.app_security_group.id]
   tags = {
     Name = "instance_2"
   }
