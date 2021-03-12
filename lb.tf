@@ -39,4 +39,16 @@
       create_before_destroy = true
     }
   }
-  
+
+  resource "aws_lb_listener" "and_project_lb_listener" {
+
+    load_balancer_arn = aws_lb.lb_and_project.arn
+
+    protocol          = "TCP"
+    port              = 80
+
+    default_action {
+      type             = "forward"
+      target_group_arn = aws_lb_target_group.lb_target_group_and_project.arn
+    }
+  }
