@@ -52,3 +52,15 @@
       target_group_arn = aws_lb_target_group.lb_target_group_and_project.arn
     }
   }
+
+
+  resource "aws_alb_target_group_attachment" "and_instance_attachment_1" {
+    target_group_arn = aws_lb_target_group.lb_target_group_and_project.arn
+    target_id = aws_instance.instance_1.id
+    port = 80
+  }
+  resource "aws_alb_target_group_attachment" "and_instance_attachment_2" {
+    target_group_arn = aws_lb_target_group.lb_target_group_and_project.arn
+    target_id = aws_instance.instance_2.id
+    port = 80
+  }
