@@ -15,4 +15,28 @@
     security_groups = [aws_security_group.app_security_group.id]
 
     enable_cross_zone_load_balancing = true
-  } 
+  }
+
+  resource "aws_lb_target_group" "lb_target_group_and_project" {
+
+    port        = 80
+    protocol    = "TCP"
+    target_type = "instance"
+    vpc_id      = aws_vpc.and_vpc.id
+
+    health_check {
+      healthy_threshold   = 2
+      interval            = 30
+      protocol            = "HTTP"
+      unhealthy_threshold = 2
+    }
+
+    depends_on = [
+      aws_lb.lb_and_project
+    ]
+
+    lifecycle {
+      create_before_destroy = true
+    }
+  }
+  
